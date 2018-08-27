@@ -1,31 +1,47 @@
 pragma solidity ^0.4.18;
+pragma experimental ABIEncoderV2;
 
 contract BCCamp {
     
-// Declare variables that will store information of BlockChain mini boot camp students, this information includes name, age, 
-// and if he/she is enjoying or not, every student information should be bound with his/her ethereum account address.
-    
-// your code here
-
-
-    
-    function addStudent(address _address, uint _age, string name, bool _isEnjoying) public {
-       // your code here
+    struct User {
+        address _address;
+        string name;
+        uint age;
+        bool isEnjoying;
     }
+    
+    mapping (address => User) userStructs;
+    
+    address[] public userAddresses;
+    
+    function addStudent(address _address, uint age, string name, bool isEnjoying) {
 
-
-
-    // build getStudents() function
+    var student = userStructs[_address];
     
     
-
-    // build getStudent(address _address) function
+    student._address = _address;
+      student.age = age;
+     
+      student.name = name;
+      
+      student.isEnjoying = isEnjoying;
+      
+      userAddresses.push(msg.sender);
+    }
     
-
-
-
-    // build countStudents() function
-
+    function getStudent(address _address) public view returns (User){
+        return userStructs[_address];
+    }
+    
+    
+    function getStudents() public view returns (address[]) {
+       return userAddresses;
+    }
+    
+    function countStudents() view returns (uint) {
+        return userAddresses.length;
+    }
+    
     
     
 }
